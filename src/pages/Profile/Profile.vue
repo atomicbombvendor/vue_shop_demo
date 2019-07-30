@@ -1,8 +1,9 @@
 <template>
   <section class="profile">
     <header-top :title="title"></header-top>
-    <section class="profile-number">
-      <a href="javascript:" class="profile-link">
+    <section class="profile-number" >
+<!--   router-link跳转到父组件的router-view中了   -->
+      <router-link to="login" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
@@ -17,8 +18,8 @@
         </div>
         <span class="arrow">
               <i class="iconfont icon-jiantou1"></i>
-            </span>
-      </a>
+        </span>
+      </router-link>
     </section>
     <section class="profile_info_data border-1px">
       <ul class="info_data_list">
@@ -110,6 +111,7 @@
   @import "../../commons/stylus/mixins.styl"
   .profile //我的
     width 100%
+    overflow hidden
     .header
       background-color #02a774
       position fixed

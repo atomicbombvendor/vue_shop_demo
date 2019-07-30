@@ -161,21 +161,74 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1. 使用Swiper4.x
 2. npm install swiper --save
 ```bash
---save：将保存配置信息到pacjage.json。默认为dependencies节点中。
+--save：将保存配置信息到package.json。默认为dependencies节点中。
 
---dev：将保存配置信息devDependencies节点中。
+--dev：将保存配置信息dev Dependencies节点中。
 
 因此：
 
---save：将保存配置信息到pacjage.json的dependencies节点中。
+--save：将保存配置信息到package.json的dependencies节点中。
 
---save-dev：将保存配置信息到pacjage.json的devDependencies节点中。
+--save-dev：将保存配置信息到package.json的dev Dependencies节点中。
 
 dependencies：运行时的依赖，发布后，即生产环境下还需要用的模块
 
-devDependencies：开发时的依赖。里面的模块是开发时用的，发布时用不到它。
+dev Dependencies：开发时的依赖。里面的模块是开发时用的，发布时用不到它。
 ```
 3. mounted() {}是方法
 4. data() {}是方法
 
+#### 跳转
+1. router-link和router-view是对应的
+2. 可是在router中设置v-show
+3. router中有meta属性值，可以设置一些属性
+```angularjs
+{
+      path: '/search',
+      component: Search,
+      meta:{
+        showFooter: true
+      }
+    }
+```
+
+#### 总结
+##### 技术
+1. 脚手架
+2. stylus
+3. vue-router
+4. $router 路由器对象，包含一些操作路由的功能函数，来实现编程式导航
+5. $route 当前路由对象，一些当前路由信息数据的容器， path meta query params
+6. 接口文档
+7. slot插槽
+8. route-view route-link keep-alive
+9. 拆分路由
+10. ajax axios promise
+
+
+### 后台
+1. nmp start 启动应用
+2. 运行server
+3. postman测试API
+
+#### 异步显示
+
+#### 登陆注册
+
+#### 跨域请求
+1. 使用 proxyTable
+```angularjs
+  dev下
+  proxyTable: {
+    '/api': { // 匹配所有以 '/api' 开头的请求路径
+      target: 'http://localhost:4000', // 代理目标的基础路径
+      changeOrigin: true, // 支持跨域
+      pathRewrite: {// 重写路径 : 去掉路径中开头的 '/api'
+        '^/api': ''
+      }
+    }
+  }
+```
+
+#### Vuex
 
