@@ -11,14 +11,17 @@ import {RECEIVE_ADDRESS, RECEIVE_SHOPS, RECEIVE_CATEGORYS} from './moutation-typ
 export default {
 
   // 异步获取
+  // action可以传递 state，也可以不传。可以接收前台的参数
   async getAddress({commit, state}){
     const geohash = state.latitude + ',' + state.longitude
     const result = await reqAddress(geohash)
+    // 参数必须是{}对象
     commit(RECEIVE_ADDRESS, {address: result.data})
   },
 
   // 异步获取分类列表
   async getCategorys({commit}) {
+    // 使用await异步请求axios返回数据
     const result = await reqCategorys()
     commit(RECEIVE_CATEGORYS, {categorys: result.data})
   },

@@ -11,6 +11,8 @@ import {
 // 方法名使用 [xxx](i1, i2)
 // {xxx} 包含xxx的对象
 export default {
+  // [RECEIVE_ADDRESS] 表示方法名
+  // {address} mutations接收包含address的对象
   [RECEIVE_ADDRESS](state, {address}){
     state.address = address
   },
