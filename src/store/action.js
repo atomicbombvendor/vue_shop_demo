@@ -5,8 +5,8 @@
 */
 
 // 引入函数名
-import {reqAddress, reqCategorys, reqShops} from '../api'
-import {RECEIVE_ADDRESS, RECEIVE_SHOPS, RECEIVE_CATEGORYS} from './moutation-types'
+import {reqAddress, reqCategorys, reqShops, reqUser} from '../api/api-index'
+import {RECEIVE_ADDRESS, RECEIVE_SHOPS, RECEIVE_CATEGORYS, RECEIVE_USER_INFO, RESET_USER_INFO} from './moutation-types'
 
 export default {
 
@@ -31,6 +31,21 @@ export default {
     const {latitude, longitude} = state
     const result = await reqShops({latitude, longitude})
     commit(RECEIVE_SHOPS, {shops: result.data})
-  }
+  },
 
+  // 异步获取用户信息
+  async getUserInfo({commit}){
+    const result = await reqUser()
+    if (result.code === 0){
+      commit(RECEIVE_USER_INFO, {userInfo:result})
+    }
+  },
+  // 记录用户信息
+  recordUserInfo({commit}, userInfo){
+    commit(RECEIVE_USER_INFO, userInfo);
+  },
+  // 退出登陆
+  async logout({commit}){
+    commit(RESET_USER_INFO)
+  }
 }

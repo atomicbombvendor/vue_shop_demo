@@ -5,7 +5,9 @@ vuex 的 mutations 模块
 import {
   RECEIVE_ADDRESS,
   RECEIVE_SHOPS,
-  RECEIVE_CATEGORYS
+  RECEIVE_CATEGORYS,
+  RECEIVE_USER_INFO,
+  RESET_USER_INFO
 } from './moutation-types'
 
 // 方法名使用 [xxx](i1, i2)
@@ -22,4 +24,10 @@ export default {
   [RECEIVE_SHOPS](state, {shops}) {
     state.shops = shops
   },
+  [RECEIVE_USER_INFO](state, {userInfo}){
+    state.userInfo = userInfo
+  },
+  [RESET_USER_INFO](state){
+    state.userInfo = {}
+  }
 }

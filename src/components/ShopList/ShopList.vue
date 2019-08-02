@@ -6,7 +6,7 @@
           :key="index" @click="$router.push('/shop')">
         <a>
           <div class="shop_left">
-            <img class="shop_img" :src="baseImgUrl+shop.image_path">
+            <img class="shop_img" src="./images/shop/1.jpg">
           </div>
           <div class="shop_right">
             <section class="shop_detail_header">
@@ -19,6 +19,7 @@
             </section>
             <section class="shop_rating_order">
               <section class="shop_rating_order_left">
+                <Star :score="shop.rating" :size="24"></Star>
                 <div class="rating_section">
                   {{shop.rating}}
                 </div>
@@ -52,13 +53,18 @@
 <script>
 
   import {mapState} from 'vuex'
+  import Star from '../../components/Star/Star'
 
   export default {
     name: 'ShopList',
     data() {
       return {
-        baseImgUrl: 'http://cangdu.org:8001/img/'
+        // baseImgUrl: 'http://cangdu.org:8001/img/'
+        baseImgUrl: './images/shop/'
       }
+    },
+    components: {
+      Star
     },
     computed: {
       ...mapState(['shops'])

@@ -7,9 +7,14 @@
         <i class="iconfont icon-sousuo"></i>
       </span>
       <!-- 根据与组件中相同名字的插槽替换 -->
-      <span class="header_login" slot="right">
-        <span class="header_login_text">登陆|注册</span>
-      </span>
+      <router-link class="header_login" slot="right" :to="userInfo._id ? '/userinfo': '/login'">
+        <span class="header_login_text" v-if="!userInfo._id">
+          登录|注册
+        </span>
+        <span class="header_login_text" v-else>
+           <i class="iconfont icon-person"></i>
+        </span>
+      </router-link>
     </HeaderTop>
     <nav class="msite_nav">
       <div class="swiper-container" v-if="categorysArr.length">
@@ -42,6 +47,8 @@
 <script>
 import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
 import ShopList from '../../components/ShopList/ShopList.vue'
+import Star from '../../components/Star/Star'
+
 // 引用js，swiper和构造函数
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
@@ -51,16 +58,17 @@ export default {
   name: 'MSite',
   data() {
     return {
-      baseImageUrl: 'https://fuss10.elemecdn.com'
+      baseImageUrl: 'https://fuss10.elemecdn.com',
     }
   },
   components: {
     HeaderTop,
-    ShopList
+    ShopList,
+    Star
   },
   computed: {
     // 读取address属性
-    ...mapState(['address', 'categorys']),
+    ...mapState(['address', 'categorys', 'userInfo']),
 
     // 定义了一个属性
     categorysArr(){

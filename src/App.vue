@@ -9,6 +9,7 @@
 <script>
 import FooterGuide from './components/FooterGuide/FooterGuild.vue'
 import {mapActions} from 'vuex'
+import Vue from 'vue'
 
 export default {
   name: 'App',
@@ -19,10 +20,12 @@ export default {
     this.getAddress()
     // 发送请求可以在父组件中发，也可以在需要用到的子组件中发。
     this.getShops()
+
+    this.getUserInfo()
   },
   methods:{
     //在methods中声明方法
-    ...mapActions(['getAddress', 'getShops']),
+    ...mapActions(['getAddress', 'getShops', 'getUserInfo']),
   }
 }
 </script>

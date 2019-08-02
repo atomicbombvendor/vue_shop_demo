@@ -7,9 +7,8 @@ import store from './store/store_index'
 
 Vue.config.productionTip = false
 
-
 /* eslint-disable no-new */
-new Vue({
+var app = new Vue({
   el: '#app',
   // 应用路由器;根据路由器配置的路由跳转到不同的页面
   router,
