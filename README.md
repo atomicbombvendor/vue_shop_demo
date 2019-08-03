@@ -231,4 +231,13 @@ dev Dependencies：开发时的依赖。里面的模块是开发时用的，发�
 ```
 
 #### Vuex
-
+1. 必须有的五个 state, mutations, actions, getter, mutation-types
+2. 在action中定义 async/await
+3. action发送ajax请求，commit给mutation
+4. mutation实现给状态赋值
+5. 在index中创建vuex对象,实例化store
+6. main.js 配置store
+7. 组件异步显示
+    1. 在mounted中发送请求获取数据到state中 this.$store.dispatch('actionName')
+    2. 读state中数据 ...mapState['axxx']
+    3. 在模板中使用数据 data, props, computed

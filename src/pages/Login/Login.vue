@@ -10,7 +10,7 @@
       </div>
       <div class="login_content">
     <!--  点击Form表单中的任何一个按钮就是刷新页面-->
-        <form>
+        <form @submit.prevent="login">
           <div :class="{on: loginWay}">
             <section class="login_message">
               <input type="tel" maxlength="11" placeholder="手机号" v-model="phoneNum">
@@ -20,7 +20,7 @@
               <!-- 阻止事件默认行为-->
             </section>
             <section class="login_verification">
-              <input type="tel" maxlength="8" placeholder="验证码">
+              <input type="tel" maxlength="8" placeholder="验证码" v-model="code">
             </section>
             <section class="login_hint">
               温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
@@ -30,17 +30,18 @@
           <div :class="{on: !loginWay}">
             <section>
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
+                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name">
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="密码">
-                <div class="switch_button off">
-                  <div class="switch_circle"></div>
-                  <span class="switch_text">...</span>
+                <input type="text" maxlength="8" placeholder="密码" v-if="showPwd" v-model="pwd">
+                <input type="password" maxlength="8" placeholder="密码" v-else v-model="pwd">
+                <div class="switch_button" :class="showPwd?'on':'off'" @click="showPwd = !showPwd">
+                  <div class="switch_circle" :class="{right: showPwd}"></div>
+                  <span class="switch_text">{{showPwd? 'abc' :'...'}}</span>
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码">
+                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
                 <img class="get_verification" src="./images/captcha.svg" alt="captcha">
               </section>
             </section>
@@ -53,18 +54,34 @@
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
+<!--                                                    父组件接收子组件的方法调用   -->
+    <AlterTip :alertText="alertText" v-show="alertShow" @closeTipParent="closeTip"></AlterTip>
   </section>
 </template>
 
 <script>
+
+  import {reqSmsLogin, reqPwdLogin} from '../../api/api_index'
+  import AlterTip from '../../components/AlterTip/AlterTip'
+
   export default {
     name: 'Login',
     data() {
       return {
         loginWay: true, // true 短信登陆，false密码登陆
-        phoneNum: '',
-        computeTime: 0
+        phoneNum: '', // 手机号
+        computeTime: 0,
+        showPwd: false,
+        pwd: '',
+        code: '', // 短信验证码
+        captcha: '', // 图形验证码
+        name: '', // 用户名
+        alertShow: 0, //弹窗
+        alertText: '0', //alert文本
       }
+    },
+    components: {
+      AlterTip
     },
     computed: {
       rightPhone(){
@@ -82,7 +99,52 @@
           }
         }, 1000)
         //发送ajax请求获取验证码
-      }
+      },
+      // 异步登录
+      async login() {
+        let result
+        // 前台表单验证
+        if(this.loginWay) {  // 短信登陆
+          const {rightPhone, phone, code} = this
+          if(!rightPhone) {
+            // 手机号不正确
+            this.showAlert('手机号不正确')
+            return
+          } else if(!/^\d{6}$/.test(code)) {
+            // 验证必须是6位数字
+            this.showAlert('验证必须是6位数字')
+            return
+          }
+          // 发送ajax请求短信登陆
+          result = await reqSmsLogin(phone, code)
+        } else {// 密码登陆
+          const {name, pwd, captcha} = this
+          if(!this.name) {
+            // 用户名必须指定
+            this.showAlert('用户名必须指定')
+            return
+          } else if(!this.pwd) {
+            // 密码必须指定
+            this.showAlert('密码必须指定')
+            return
+          } else if(!this.captcha) {
+            // 验证码必须指定
+            this.showAlert('验证码必须指定')
+            return
+          }
+          // 发送ajax请求密码登陆
+          result = await reqPwdLogin({name, pwd, captcha})
+        }
+      },
+
+      showAlert(text){
+        this.alertText = text
+        this.alertShow = true
+      },
+
+      closeTip(){
+        this.alertShow = false
+      },
     }
   }
 </script>
@@ -189,6 +251,8 @@
                   background #fff
                   box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
                   transition transform .3s
+                  &.right
+                    transform translateX(27px)
             .login_hint
               margin-top 12px
               color #999

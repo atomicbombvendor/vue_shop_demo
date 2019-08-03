@@ -5,7 +5,7 @@
 */
 
 // 引入函数名
-import {reqAddress, reqCategorys, reqShops, reqUser} from '../api/api-index'
+import {reqAddress, reqCategorys, reqShops, reqUser} from '../api/api_index'
 import {RECEIVE_ADDRESS, RECEIVE_SHOPS, RECEIVE_CATEGORYS, RECEIVE_USER_INFO, RESET_USER_INFO} from './moutation-types'
 
 export default {
