@@ -7,7 +7,10 @@ import {
   RECEIVE_SHOPS,
   RECEIVE_CATEGORYS,
   RECEIVE_USER_INFO,
-  RESET_USER_INFO
+  RESET_USER_INFO,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO
 } from './moutation-types'
 
 // 方法名使用 [xxx](i1, i2)
@@ -30,5 +33,16 @@ export default {
   },
   [RESET_USER_INFO](state){
     state.userInfo = {}
-  }
+  },
+  [RECEIVE_INFO](state, {info}) {
+    state.info = info
+  },
+
+  [RECEIVE_RATINGS](state, {ratings}) {
+    state.ratings = ratings
+  },
+
+  [RECEIVE_GOODS](state, {goods}) {
+    state.goods = goods
+  },
 }

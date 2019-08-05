@@ -8,7 +8,7 @@
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || '登陆注册'}}</p>
+          <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || '登录/注册'}}</p>
           <p>
                 <span class="user-icon">
                   <i class="iconfont icon-shouji icon-mobile"></i>
@@ -89,12 +89,17 @@
         </div>
       </a>
     </section>
+
+    <section class="profile_my_order border-1px">
+      <mt-button  type="danger" style="width: 100%" @click="logout" v-if="userInfo.name">退出登录</mt-button>
+    </section>
   </section>
 </template>
 
 <script>
   import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
   import {mapState} from 'vuex'
+  import { MessageBox } from 'mint-ui'
 
   export default {
     components: {
@@ -107,7 +112,17 @@
     },
     computed: {
       ...mapState(['userInfo'])
-    }
+    },
+    methods: {
+      logout () {
+        MessageBox.confirm(' 确定退出登陆吗?')
+          .then(action => {
+          this.$store.dispatch('logout')
+        }, action => {
+            console.log("取消了退出")
+          });
+      }
+    },
   }
 </script>
 

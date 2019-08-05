@@ -241,3 +241,6 @@ dev Dependencies：开发时的依赖。里面的模块是开发时用的，发�
     1. 在mounted中发送请求获取数据到state中 this.$store.dispatch('actionName')
     2. 读state中数据 ...mapState['axxx']
     3. 在模板中使用数据 data, props, computed
+
+#### 注册全局组件
+Vue.component(Button.name, Button)
