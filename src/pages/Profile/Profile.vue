@@ -2,18 +2,18 @@
   <section class="profile">
     <header-top :title="title"></header-top>
     <section class="profile-number" >
-<!--   router-link跳转到父组件的router-view中了   -->
-      <router-link to="login" class="profile-link">
+<!-- 点击 router-link跳转到父组件的router-view中了   -->
+      <router-link :to="userInfo.name ? '/userInfo' : '/login'" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">{{userInfo.name || '登陆注册'}}</p>
+          <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || '登陆注册'}}</p>
           <p>
                 <span class="user-icon">
                   <i class="iconfont icon-shouji icon-mobile"></i>
                 </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">{{userInfo.phone || '暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">

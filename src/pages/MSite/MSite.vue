@@ -3,12 +3,12 @@
     <!--首页头部-->
     <!-- 使用了插槽和组件值绑定-->
     <HeaderTop :title="address.name">
-      <span class="header_search" slot="left">
+      <router-link class="header_search" slot="left" to="search">
         <i class="iconfont icon-sousuo"></i>
-      </span>
+      </router-link>
       <!-- 根据与组件中相同名字的插槽替换 -->
-      <router-link class="header_login" slot="right" :to="userInfo._id ? '/userinfo': '/login'">
-        <span class="header_login_text" v-if="!userInfo._id">
+      <router-link class="header_login" slot="right" :to="userInfo.name ? '/userinfo': '/login'">
+        <span class="header_login_text" v-if="!userInfo.name">
           登录|注册
         </span>
         <span class="header_login_text" v-else>

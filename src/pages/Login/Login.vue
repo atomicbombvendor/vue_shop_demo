@@ -151,7 +151,7 @@
           // 发送ajax请求密码登陆
           result = await reqPwdLogin({name, pwd, captcha})
         }
-        result = {"code": 0, "data": {"name": "tmp", "pwd": "123"}}
+        result = {"code": 0, "data": {"name": "tmp", "pwd": "123", "phone": "phone"}}
         this.processResult(result)
       },
 
