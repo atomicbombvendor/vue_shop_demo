@@ -8,8 +8,11 @@
 
 <script>
 import FooterGuide from './components/FooterGuide/FooterGuild.vue'
+import {Button} from 'mint-ui'
 import {mapActions} from 'vuex'
 import Vue from 'vue'
+
+Vue.component(Button.name, Button)
 
 export default {
   name: 'App',

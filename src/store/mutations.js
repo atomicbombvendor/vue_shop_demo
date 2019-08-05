@@ -25,6 +25,7 @@ export default {
     state.shops = shops
   },
   [RECEIVE_USER_INFO](state, {userInfo}){
+    console.log("RECEIVE_USER_INFO " + JSON.stringify(userInfo))
     state.userInfo = userInfo
   },
   [RESET_USER_INFO](state){

@@ -40,9 +40,9 @@ export default {
       commit(RECEIVE_USER_INFO, {userInfo:result})
     }
   },
-  // 记录用户信息
-  recordUserInfo({commit}, userInfo){
-    commit(RECEIVE_USER_INFO, userInfo);
+  // 同步记录用户信息
+  recordUserInfo({commit}, user){
+    commit(RECEIVE_USER_INFO, {userInfo: user});
   },
   // 退出登陆
   async logout({commit}){

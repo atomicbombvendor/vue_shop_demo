@@ -41,8 +41,8 @@
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha" ref="captcha">
+                <img class="get_verification" @click="getCaptcha" src="http://localhost:4000/captcha" alt="captcha">
               </section>
             </section>
           </div>
@@ -61,8 +61,9 @@
 
 <script>
 
-  import {reqSmsLogin, reqPwdLogin} from '../../api/api_index'
   import AlterTip from '../../components/AlterTip/AlterTip'
+  import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../api/api_index'
+  import {RECEIVE_USER_INFO} from '../../store/moutation-types'
 
   export default {
     name: 'Login',
@@ -78,6 +79,7 @@
         name: '', // 用户名
         alertShow: 0, //弹窗
         alertText: '0', //alert文本
+        intervalId: null,
       }
     },
     components: {
@@ -86,20 +88,34 @@
     computed: {
       rightPhone(){
           return /^1\d{10}$/.test(this.phoneNum)
-      }
+      },
+
     },
     methods: {
-      getCode(){
+     async getCode(){
         // 启动倒计时
-        this.computeTime = 5
-        const intervalId = setInterval(() => {
+        this.computeTime = 10
+        this.intervalId = setInterval(() => {
           this.computeTime --;
           if (this.computeTime === 0){
-            clearInterval(intervalId)
+            clearInterval(this.intervalId)
           }
         }, 1000)
-        //发送ajax请求获取验证码
+
+       //发送ajax请求获取验证码
+       const result = await reqSendCode(this.phone)
+       if (result.code === 1){
+         //显示提示
+         this.showAlert(result.msg)
+         //停止倒计时
+         if (this.computeTime>0){
+           this.computeTime = 0
+           clearInterval(this.intervalId)
+           this.intervalId = null
+         }
+       }
       },
+
       // 异步登录
       async login() {
         let result
@@ -135,16 +151,45 @@
           // 发送ajax请求密码登陆
           result = await reqPwdLogin({name, pwd, captcha})
         }
+        result = {"code": 0, "data": {"name": "tmp", "pwd": "123"}}
+        this.processResult(result)
       },
 
       showAlert(text){
         this.alertText = text
         this.alertShow = true
+        this.$refs.captcha.src='http://localhost:4000/captcha?time='+Date.now()
       },
 
       closeTip(){
         this.alertShow = false
       },
+
+      getCaptcha(){
+        this.$refs.captcha.src='http://localhost:4000/captcha?time='+Date.now()
+      },
+
+      //根据结果处理数据
+      processResult(result){
+        if (this.computeTime>0){
+          this.computeTime = 0
+          clearInterval(this.intervalId)
+          this.intervalId = null
+        }
+
+        if (result.code === 0){
+          const user = result.data
+          //将user保存到state
+          this.$store.dispatch('recordUserInfo', user)
+          //跳转路由
+          this.$router.replace("/profile")
+        }else{
+          const msg = result.msg
+          this.showAlert(msg)
+          this.getCaptcha()
+        }
+      },
+
     }
   }
 </script>
