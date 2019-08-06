@@ -28,10 +28,12 @@
       ShopHeader
     },
     mounted () {
-      this.getShopInfo()
+      debugger
+      // this.getShopInfo()
+      this.$store.dispatch('getShopInfo')
     },
     methods: {
-      ...mapActions(['getShopInfo'])
+
     }
   }
 </script>

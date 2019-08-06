@@ -244,3 +244,21 @@ dev Dependencies：开发时的依赖。里面的模块是开发时用的，发�
 
 #### 注册全局组件
 Vue.component(Button.name, Button)
+
+#### MOCK JS
+```javascript
+import Mock from 'mockjs'
+import data from './data.json'
+
+// 只需要运行就可以访问
+// 返回goods的接口
+Mock.mock('/goods', {code:0, data: data.goods})
+
+// 返回ratings的接口
+Mock.mock('/ratings', {code:0, data: data.ratings})
+
+// 返回info的接口
+Mock.mock('/info', {code:0, data: data.info})
+```
+
+#### 三级表达式会包空指针异常

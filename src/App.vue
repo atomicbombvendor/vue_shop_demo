@@ -21,10 +21,13 @@ export default {
     this.getShops()
 
     this.getUserInfo()
+
+    this.getShopInfo()
   },
   methods:{
     //在methods中声明方法
-    ...mapActions(['getAddress', 'getShops', 'getUserInfo']),
+    ...mapActions(['getAddress', 'getShops', 'getUserInfo',
+    'getShopInfo']),
   }
 }
 </script>

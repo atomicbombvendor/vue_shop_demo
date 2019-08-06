@@ -4,7 +4,13 @@
  */
 
 // 引入函数名
-import {reqAddress, reqCategorys, reqShops, reqUser, reqShopGoods, reqShopInfo, reqShopRatings} from '../api/api_index'
+import {reqAddress, reqCategorys,
+  reqShops, reqUser,
+  reqShopGoods,
+  reqShopInfo,
+  reqShopRatings
+} from '../api/api_index'
+
 import {
   RECEIVE_ADDRESS, RECEIVE_SHOPS, RECEIVE_CATEGORYS, RECEIVE_USER_INFO, RESET_USER_INFO,
   RECEIVE_INFO,
@@ -60,7 +66,9 @@ export default {
 
   // 异步获取商家信息
   async getShopInfo ({commit}) {
+    debugger
     const result = await reqShopInfo()
+    debugger
     if (result.code === 0) {
       const info = result.data
       commit(RECEIVE_INFO, {info})
@@ -68,24 +76,20 @@ export default {
   },
 
   // 异步获取商家评价列表
-  async getShopRatings ({commit}, callback) {
+  async getShopRatings ({commit}) {
     const result = await reqShopRatings()
     if (result.code === 0) {
       const ratings = result.data
       commit(RECEIVE_RATINGS, {ratings})
-      // 数据更新了, 通知一下组件
-      callback && callback()
     }
   },
 
   // 异步获取商家商品列表
-  async getShopGoods ({commit}, callback) {
+  async getShopGoods ({commit}) {
     const result = await reqShopGoods()
     if (result.code === 0) {
       const goods = result.data
       commit(RECEIVE_GOODS, {goods})
-      // 数据更新了, 通知一下组件
-      callback && callback()
     }
   },
 }
