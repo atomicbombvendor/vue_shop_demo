@@ -16,6 +16,8 @@ export const reqCategorys = () => ajax(BASE_URL + '/index_category')
  * 两个数据一个参数
  */
 export const reqShops = (latitude, longitude) => ajax(BASE_URL + '/shops', {latitude, longitude})
+
+export const reqSearchShop = (geohash, keyword) => ajax(BASE_URL + '/search_shops', {geohash, keyword})
 /**
  * 账号密码登录
  */
@@ -34,7 +36,6 @@ export const reqPwdLogin = (name, pwd, captcha) => axios.post(BASE_URL + '/login
     //在设置触发错误的请求时发生了错误
     // console.log('Error', error.message);
   }
-  debugger
   return {"name": name, "pwd": pwd};
 });
 /**

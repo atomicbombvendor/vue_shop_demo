@@ -28,7 +28,6 @@
       ShopHeader
     },
     mounted () {
-      debugger
       // this.getShopInfo()
       this.$store.dispatch('getShopInfo')
     },
@@ -37,7 +36,6 @@
     }
   }
 </script>
-
 
 
 <style lang="stylus" rel="stylesheet/stylus">

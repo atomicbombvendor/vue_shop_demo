@@ -262,3 +262,40 @@ Mock.mock('/info', {code:0, data: data.info})
 ```
 
 #### 三级表达式会包空指针异常
+
+#### 路由组件缓存 <keep-alive>
+
+#### 路由push应该使用 replace属性
+
+#### 路由懒加载
+1. 路由组件导入函数化
+```javascript
+const MSite = () => import('../pages/MSite/MSite.vue')
+```
+2. 只有执行此函数时，才会加载组件
+3. 函数在请求对应的路由路径时执行
+
+#### 图片懒加载
+1. vue-layload
+2. import vueLazyLoad from 'vue-lazyload'
+3. Vue.use(vueLazyLoad, { // 内部自定义指令 lazy
+loading: 'dist/xxx.jpg'
+})
+4. <img v-lazy="xxx.jpg">
+
+#### 日期格式化过滤器
+1. filter/index 过滤器
+2. moment
+2. 
+```javascript
+Vue.filter('dateFormat', function(value){
+    return moment(value).format('YYYY-MM-DD HH:mm:ss') 
+})
+```
+4. mian.js中引入
+5. 使用{{rating.rateTime | dateFormat}}
+
+#### 打包文件的更新优化
+1. webpack-bundle-analyzer
+2. 启用： cnpm run build --report
+3. 生成关于vendor分析包占用大小页面
